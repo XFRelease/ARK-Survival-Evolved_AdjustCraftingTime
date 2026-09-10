@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>修改物品制作时间（AdjustCraftingTime） 软件简介</title>
+<style>
+/* ============================================================
+   样式区：禁止修改！
+   本模板是 xiangmujiaocheng 技能的「软件简介」专属模板（清爽文档蓝）。
+   修改此区会破坏所有项目软件简介的视觉统一。
+   ============================================================ */
+:root{--acc:#2563eb;--accbg:#eff6ff;--line:#e2e8f0;--line2:#cbd5e1;--text:#1e293b;--dim:#64748b;--bg2:#f8fafc;--ok:#16a34a;--warn:#d97706;--warnbg:#fffbeb;--warnline:#fde68a}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font:15.5px/1.85 "Microsoft YaHei","PingFang SC","Segoe UI",sans-serif;color:var(--text);background:#fff}
+a{color:var(--acc);text-decoration:none}a:hover{text-decoration:underline}
+code{background:var(--accbg);color:#1d4ed8;border-radius:4px;padding:1px 7px;font-family:Consolas,"Courier New",monospace;font-size:13.5px}
+pre{background:var(--bg2);border:1px solid var(--line);border-radius:8px;padding:13px 16px;overflow:auto}
+pre code{background:none;color:#0f172a;padding:0}
+.hide{display:none!important}
+
+.hero{background:linear-gradient(180deg,#eef5ff 0%,#ffffff 100%);border-bottom:1px solid var(--line);padding:44px 20px 32px;text-align:center}
+.kind{display:inline-block;background:var(--acc);color:#fff;border-radius:4px;font-size:13px;padding:2px 12px;letter-spacing:2px}
+.hero h1{margin:14px 0 8px;font-size:34px}
+.hero h1 .accent{color:var(--acc)}
+.hero .sub{color:var(--dim);margin:0 auto;max-width:640px;font-size:15.5px}
+
+.toolbar{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 1px 3px rgba(15,23,42,.05)}
+.toolbar-in{max-width:980px;margin:0 auto;display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:10px 20px}
+#searchInput{flex:1 1 240px;border:1px solid var(--line2);border-radius:8px;padding:8px 14px;font-size:14.5px;outline:none;background:var(--bg2)}
+#searchInput:focus{border-color:var(--acc);background:#fff;box-shadow:0 0 0 3px rgba(37,99,235,.12)}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{border:1px solid var(--line2);background:#fff;color:var(--dim);border-radius:999px;padding:5px 15px;font-size:13.5px;cursor:pointer}
+.chip:hover{border-color:var(--acc);color:var(--acc)}
+.chip.on{background:var(--acc);border-color:var(--acc);color:#fff}
+.count{color:var(--dim);font-size:13px;white-space:nowrap}
+
+.content{max-width:980px;margin:0 auto;padding:30px 20px 70px}
+
+.unit{margin:0 0 38px}
+.group{font-size:12.5px;color:var(--acc);letter-spacing:2px;margin-bottom:4px}
+.unit>h2{margin:0 0 10px;font-size:22px;border-left:4px solid var(--acc);padding-left:12px}
+.lead{color:var(--dim);margin:0 0 14px;font-size:14.5px}
+.unit h3{font-size:16.5px;margin:20px 0 8px}
+
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:13px;margin:16px 0}
+.card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:15px 17px;box-shadow:0 1px 2px rgba(15,23,42,.04);transition:.15s}
+.card:hover{border-color:var(--acc);box-shadow:0 4px 14px rgba(37,99,235,.12)}
+.card .icon{font-size:22px}
+.card h4{margin:7px 0 5px;font-size:15.5px;color:var(--acc)}
+.card p{margin:0;color:var(--dim);font-size:13.5px}
+
+.note,.warning{border-radius:8px;padding:12px 16px;margin:14px 0;font-size:14.5px}
+.note{background:var(--accbg);border:1px solid #bfdbfe}
+.warning{background:var(--warnbg);border:1px solid var(--warnline)}
+
+table.data-table{width:100%;border-collapse:collapse;margin:12px 0;font-size:14.5px}
+.data-table th{background:var(--accbg);color:#1d4ed8;text-align:left}
+.data-table th,.data-table td{border:1px solid var(--line);padding:8px 13px}
+.data-table tr:nth-child(even) td{background:#fbfdff}
+
+details.faq{background:var(--bg2);border:1px solid var(--line);border-radius:8px;padding:10px 16px;margin:9px 0}
+details.faq summary{cursor:pointer;font-weight:600}
+details.faq[open]{border-color:var(--acc)}
+details.faq .answer{color:var(--dim);padding-top:7px}
+
+.shot{border:2px dashed var(--line2);border-radius:8px;padding:26px;text-align:center;color:var(--dim);font-size:14px;margin:13px 0}
+.badge{display:inline-block;border-radius:4px;padding:1px 10px;font-size:12.5px;margin-right:6px;color:var(--acc);border:1px solid var(--acc)}
+.badge.ok{color:var(--ok);border-color:var(--ok)}
+.badge.warn{color:var(--warn);border-color:var(--warn)}
+.empty{border:1px dashed var(--line2);border-radius:10px;padding:44px;text-align:center;color:var(--dim);margin:20px 0}
+
+.foot{border-top:1px solid var(--line);color:var(--dim);text-align:center;padding:20px;font-size:13px;background:var(--bg2)}
+@media (max-width:640px){.hero h1{font-size:26px}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <span class="kind">软件简介</span>
+  <h1>修改物品制作时间 <span class="accent">制作耗时，服主说了算</span></h1>
+  <p class="sub">方舟生存进化服务端 ArkApi 插件：在 config.json 里按蓝图指定物品、精确改写制作秒数，未指定的物品保持原版，支持热重载。</p>
+</header>
+
+<div class="toolbar"><div class="toolbar-in">
+  <input id="searchInput" type="search" placeholder="搜索功能…">
+  <div class="chips">
+    <button class="chip on" data-cat="all">全部</button>
+    <button class="chip" data-cat="core">核心卖点</button>
+    <button class="chip" data-cat="adv">特色功能</button>
+    <button class="chip" data-cat="env">适配与购买</button>
+  </div>
+  <span class="count" id="resultCount"></span>
+</div></div>
+
+<main class="content">
+
+<section class="unit" id="s1" data-cat="core">
+  <div class="group">01 · 软件定位</div>
+  <h2>软件定位</h2>
+  <p>想让水泥 3 秒一团、C4 慢慢搓上十分钟？游戏原版只有全局制作速度倍率这类设置，只能笼统地全服拉快拉慢，做不到「只调某几个物品」。</p>
+  <p>修改物品制作时间（AdjustCraftingTime）解决的就是这个：一个基于 ArkApi 的 Windows 服务端插件。服主在 config.json 的 <code>List</code> 里按蓝图路径逐物品填写制作秒数（支持小数），玩家制作对应物品 / 图纸时插件即时改写耗时；没列出的物品完全走原版逻辑，零干扰。改配置不用重启，一条 Reload 命令立即生效。</p>
+</section>
+
+<section class="unit" id="s2" data-cat="env">
+  <div class="group">02 · 适配环境</div>
+  <h2>适配环境</h2>
+  <table class="data-table">
+    <tr><th style="width:150px">项目</th><th>要求</th></tr>
+    <tr><td>操作系统</td><td>Windows</td></tr>
+    <tr><td>服务端插件框架</td><td>ArkApi（<code>ArkApi.lib</code>，头文件 <code>API/Ark/Ark.h</code>；生成插件要求 ArkApi ≥ 3.5，见 <code>Output/PluginInfo.json</code>）</td></tr>
+    <tr><td>编译工具</td><td>Visual Studio 2019 v142 工具集（更高版本亦可）、MSBuild</td></tr>
+    <tr><td>数据存储</td><td>无数据库依赖——全部配置就一个 <code>config.json</code>，运行日志按天落盘（依据 <code>h/日志.h</code> 与产物 DLL 导入表：仅系统库，无数据库客户端）</td></tr>
+  </table>
+</section>
+
+<div class="card-grid">
+  <div class="unit card" data-cat="core"><div class="icon">🧩</div><h4>按物品精确控制</h4><p>按蓝图路径逐物品指定制作秒数，想调哪个调哪个。</p></div>
+  <div class="unit card" data-cat="core"><div class="icon">⏱️</div><h4>秒数随便设</h4><p>支持小数秒，加速减速皆可，直接替换原版时长。</p></div>
+  <div class="unit card" data-cat="core"><div class="icon">🛡️</div><h4>未命中零干扰</h4><p>没配置的物品完全走原版逻辑，不影响其他玩法。</p></div>
+  <div class="unit card" data-cat="adv"><div class="icon">🔄</div><h4>配置热重载</h4><p>改完 config.json 一条 Reload 命令免重启立即生效。</p></div>
+  <div class="unit card" data-cat="adv"><div class="icon">📝</div><h4>容错与中文日志</h4><p>非法配置条目黄色警告并跳过，不影响其余条目生效。</p></div>
+  <div class="unit card" data-cat="adv"><div class="icon">🚀</div><h4>轻量部署</h4><p>单 DLL 不依赖数据库，放进插件目录即用。</p></div>
+</div>
+
+<section class="unit" id="s3" data-cat="core">
+  <div class="group">03 · 重点功能</div>
+  <h2>按蓝图改写制作耗时 <span class="badge ok">核心</span></h2>
+  <p><b>什么功能：</b>插件 Hook 了游戏的物品制作耗时查询（<code>UPrimalItem.GetTimeToCraftBlueprint</code>）。玩家制作物品（含用图纸制作产物）时，插件拿物品蓝图路径去配置表里查：命中就返回服主填写的秒数，没查到就原样交给游戏计算。</p>
+  <p><b>什么作用：</b>实现「按物品」维度的制作时间控制——比如只把水泥调快、只把火箭弹调慢，其他一切不动。配置里写的是最终秒数（支持小数），不是倍率，所见即所得。</p>
+  <p><b>给你的好处：</b>没有它，你只能动全局制作倍率，要么全服起飞、要么全员坐牢；有了它，经济类物资可以刻意放慢、繁琐杂物可以一把提速，服务器节奏完全由你拿捏。</p>
+</section>
+
+<section class="unit" id="s4" data-cat="core">
+  <div class="group">03 · 重点功能</div>
+  <h2>配置热重载，免重启调参 <span class="badge ok">核心</span></h2>
+  <p><b>什么功能：</b>配置集中在 <code>ArkApi\Plugins\AdjustCraftingTime\config.json</code> 的 <code>List</code> 列表里，一条一个物品（蓝图路径 + 秒数）；控制台 / RCON 执行 <code>AdjustCraftingTime.Reload</code> 立即重读生效。</p>
+  <p><b>什么作用：</b>线上调数值不用停服——试运营期间随时改、随时验，玩家在线也无感；写错的条目会被黄色警告跳过，不影响其余条目生效。</p>
+  <p><b>给你的好处：</b>没有它，每调一次数值都要重启一次服务器、劝退一波在线玩家；有了它，调整即时生效，你可以按玩家反馈随时微调服务器节奏。</p>
+</section>
+
+<section class="unit" id="s5" data-cat="adv">
+  <div class="group">03 · 重点功能</div>
+  <h2>稳定与兼容 <span class="badge">特色</span></h2>
+  <p><b>什么功能：</b>插件加载时把配置 List 编译成内存查找表，钩子查询走加锁快照——RCON 线程热重载与游戏线程制作查询互不干扰；日志模块自动适配 ArkApi 3.54（GBK）/ 3.55（UTF-8）两种控制台编码，中文输出不乱码。</p>
+  <p><b>什么作用：</b>高频制作查询不解析 JSON、不拖慢制作界面；配置重载与制作行为并发安全；各版本服务器控制台日志均可读。</p>
+  <p><b>给你的好处：</b>没有它，配置热重载可能与制作查询并发冲突、控制台中文一片乱码；有了它，7×24 挂机稳定运行，出问题看日志就能定位。</p>
+</section>
+
+<section class="unit" id="s6" data-cat="adv">
+  <div class="group">03 · 重点功能</div>
+  <h2>轻量部署 <span class="badge">特色</span></h2>
+  <p><b>什么功能：</b>插件只有一个 DLL，不依赖数据库和额外组件；部署只需把 <code>AdjustCraftingTime.dll</code>、<code>config.json</code>、<code>PluginInfo.json</code> 放进 <code>ArkApi\Plugins\AdjustCraftingTime\</code> 目录；工程另带一键编译（测试版 / 正式版）与一键多服部署脚本供开发者使用。</p>
+  <p><b>什么作用：</b>拿到文件一分钟上线；想临时停用，把 DLL 改名为 <code>AdjustCraftingTime.dll.arkapi</code> 重启服务器即可。</p>
+  <p><b>给你的好处：</b>没有它，有些插件要装数据库、配依赖、按版本挑文件；有了它，复制粘贴即完成部署，多服务器也能一条脚本铺完。</p>
+</section>
+
+<section class="unit" id="s7" data-cat="core">
+  <div class="group">04 · 运行效果</div>
+  <h2>运行效果</h2>
+  <div class="shot">📷 此处应放截图：服务器控制台中插件加载横幅与 Reloaded config 提示</div>
+  <div class="shot">📷 此处应放截图：config.json 的 List 配置示例（蓝图路径 + 制作秒数）</div>
+  <div class="shot">📷 此处应放截图：调整前后同一物品制作耗时对比（制作界面）</div>
+</section>
+
+<section class="unit" id="s8" data-cat="env">
+  <div class="group">05 · 价格与购买</div>
+  <h2>价格与购买</h2>
+  <div class="note">咨询与购买联系方式：QQ 711919（依据 <code>Output/PluginInfo.json</code> 与 <code>Main.cpp</code> 启动横幅）。价格与版本划分以发布信息为准。</div>
+</section>
+
+<div class="empty hide" id="emptyState">没有匹配的内容，换个关键词或分类试试</div>
+</main>
+
+<footer class="foot">
+  修改物品制作时间（AdjustCraftingTime） · 软件简介 · 2026-09
+</footer>
+
+<script>
+(function(){
+var inp=document.getElementById('searchInput');
+var chips=[].slice.call(document.querySelectorAll('.chip'));
+var units=[].slice.call(document.querySelectorAll('.unit'));
+var empty=document.getElementById('emptyState');
+var cnt=document.getElementById('resultCount');
+var cat='all';
+function go(){
+  var q=(inp.value||'').trim().toLowerCase(),n=0;
+  units.forEach(function(u){
+    var okC=(cat=='all'||u.getAttribute('data-cat')==cat);
+    var t=(u.textContent||'').toLowerCase()+(u.getAttribute('data-kw')||'');
+    var okQ=!q||t.indexOf(q)>-1;
+    var s=okC&&okQ;u.classList.toggle('hide',!s);if(s)n++;
+  });
+  empty.classList.toggle('hide',n>0);
+  cnt.textContent=n+' / '+units.length+' 条';
+}
+chips.forEach(function(c){c.addEventListener('click',function(){
+  chips.forEach(function(x){x.classList.remove('on')});c.classList.add('on');
+  cat=c.getAttribute('data-cat');go();
+})});
+inp.addEventListener('input',go);go();
+})();
+</script>
+
+</body>
+</html>
