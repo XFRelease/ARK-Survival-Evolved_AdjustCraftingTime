@@ -19,6 +19,6 @@ $\textcolor{#007ec6}{\text{📅 2026-09-11 04:43 · 📦 0.12 MB}}$
 [![GitHub 下载](https://img.shields.io/badge/GitHub-%E4%B8%8B%E8%BD%BD-orange?style=flat-square)](https://github.com/XFRelease/ARK-Survival-Evolved_AdjustCraftingTime/releases/download/v1.0/AdjustCraftingTime_v1.0.zip) [![百度网盘 下载](https://img.shields.io/badge/%E7%99%BE%E5%BA%A6%E7%BD%91%E7%9B%98-%E4%B8%8B%E8%BD%BD-orange?style=flat-square)](https://pan.baidu.com/s/1lb7aQubMv9YZ8ejBRr2ROw?pwd=7sqg)
 
 ```diff
-- None
+- 1.重构,未测试
 ```
 
